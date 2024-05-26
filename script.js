@@ -8,17 +8,16 @@ function calculateResults() {
         contabilidade: 0,
         rh: 0,
         administracao: 0,
-        finanças: 0,
-        engenharia: 0,
-        comunicacao: 0
+        finanças: 0
     };
 
     formData.forEach((value, key) => {
-        if (key !== 'q11') { // Ignora a pergunta das imagens
+        if (key !== 'q11' && value !== 'nao') { // Ignora a pergunta das imagens e respostas "nao"
             answers[value]++;
         }
     });
 
+    // Encontra a área com a pontuação mais alta
     const result = Object.keys(answers).reduce((a, b) => answers[a] > answers[b] ? a : b);
     
     let resultText = '';
@@ -43,12 +42,6 @@ function calculateResults() {
             break;
         case 'finanças':
             resultText = 'Você é mais apto a seguir Finanças!';
-            break;
-        case 'engenharia':
-            resultText = 'Você é mais apto a seguir Engenharia!';
-            break;
-        case 'comunicacao':
-            resultText = 'Você é mais apto a seguir Comunicação!';
             break;
         default:
             resultText = 'Por favor, responda todas as perguntas.';
