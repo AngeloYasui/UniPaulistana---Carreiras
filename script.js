@@ -8,18 +8,26 @@ function calculateResults() {
         contabilidade: 0,
         rh: 0,
         administracao: 0,
-        finanças: 0
+        financas: 0
     };
 
+    let allAnswered = true;
     formData.forEach((value, key) => {
-        if (key !== 'q11' && value !== 'nao') { // Ignora a pergunta das imagens e respostas "nao"
+        if (key !== 'q11' && value === '') {
+            allAnswered = false;
+        } else if (key !== 'q11' && value !== 'nao') {
             answers[value]++;
         }
     });
 
+    if (!allAnswered) {
+        document.getElementById('results').textContent = 'Por favor, responda todas as perguntas.';
+        return;
+    }
+
     // Encontra a área com a pontuação mais alta
     const result = Object.keys(answers).reduce((a, b) => answers[a] > answers[b] ? a : b);
-    
+
     let resultText = '';
     switch(result) {
         case 'psicologia':
@@ -40,13 +48,13 @@ function calculateResults() {
         case 'administracao':
             resultText = 'Você é mais apto a seguir Administração!';
             break;
-        case 'finanças':
+        case 'financas':
             resultText = 'Você é mais apto a seguir Finanças!';
             break;
         default:
             resultText = 'Por favor, responda todas as perguntas.';
             break;
     }
-    
+
     document.getElementById('results').textContent = resultText;
 }
