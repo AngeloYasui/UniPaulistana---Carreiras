@@ -12,13 +12,16 @@ function calculateResults() {
     };
 
     let allAnswered = true;
-    formData.forEach((value, key) => {
-        if (key !== 'q11' && value === '') {
+    for (let i = 1; i <= 10; i++) {
+        const questionName = `q${i}`;
+        const selectedOption = formData.get(questionName);
+        if (!selectedOption) {
             allAnswered = false;
-        } else if (key !== 'q11' && value !== 'nao') {
-            answers[value]++;
+            break;
+        } else if (selectedOption !== 'nao') {
+            answers[selectedOption]++;
         }
-    });
+    }
 
     if (!allAnswered) {
         document.getElementById('results').textContent = 'Por favor, responda todas as perguntas.';
